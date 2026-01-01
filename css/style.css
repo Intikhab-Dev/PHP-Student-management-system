@@ -1,0 +1,95 @@
+body {
+    font-family: Arial, sans-serif;
+    background: #f4f6f8;
+    margin: 0;
+    padding: 20px;
+}
+
+h2 {
+    text-align: center;
+}
+
+.container {
+    max-width: 1000px;
+    margin: auto;
+    background: #fff;
+    padding: 20px;
+    border-radius: 6px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+form {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+form input, form button {
+    padding: 10px;
+    font-size: 14px;
+}
+
+form button {
+    grid-column: span 2;
+    background: #007bff;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
+
+form button:hover {
+    background: #0056b3;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table th, table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: center;
+}
+
+table th {
+    background: #007bff;
+    color: #fff;
+}
+
+.btn {
+    padding: 5px 10px;
+    border: none;
+    cursor: pointer;
+    color: #fff;
+}
+
+.btn-edit {
+    background: #28a745;
+}
+
+.btn-delete {
+    background: #dc3545;
+}
+
+#toast {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: #333;
+    color: #fff;
+    padding: 12px 20px;
+    border-radius: 6px;
+    font-size: 14px;
+    display: none;
+    z-index: 9999;
+}
+
+#toast.success {
+    background: #28a745;
+}
+
+#toast.error {
+    background: #dc3545;
+}
