@@ -46,7 +46,7 @@ function loadStudents() {
 // Add student
 document.getElementById("studentForm").addEventListener("submit", function(e) {
     e.preventDefault();
-    
+
     const data = {
         name: sname.value,
         age: age.value,
@@ -62,7 +62,11 @@ document.getElementById("studentForm").addEventListener("submit", function(e) {
     })
     .then(res => res.json())
     .then(response => {
-        showToast(response.message, "success");
+        if (response.status == true){
+            showToast(response.message, "success");
+        }else{
+            showToast(response.message, "error");
+        }
         this.reset();
         closeAddModal();
         loadStudents();
@@ -78,7 +82,11 @@ function deleteStudent(id) {
     })
     .then(res => res.json())
     .then(response => {
-        showToast(response.message, "success");
+        if (response.status == true){
+            showToast(response.message, "success");
+        }else{
+            showToast(response.message, "error");
+        }
         loadStudents();
     });
 }
@@ -138,7 +146,11 @@ function updateStudent() {
     })
     .then(res => res.json())
     .then(response => {
-        showToast(response.message, "success");
+        if (response.status == true) {
+            showToast(response.message, "success");
+        } else {
+            showToast(response.message, "error");
+        }
         closeEditModal();
         loadStudents();
     });
