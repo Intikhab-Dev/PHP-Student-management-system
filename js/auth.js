@@ -5,6 +5,15 @@ const API_BASE = "http://localhost/PHP-REST-APIs/api";
 /* REGISTER */
 document.getElementById("registerForm").addEventListener("submit", function(e) {
     e.preventDefault();
+    const password_check = document.getElementById("reg_password").value;
+    const passwordHelp = document.getElementById("passwordHelp");
+    if (!validateStrongPassword(password_check)) {
+        passwordHelp.innerText =
+            "Password must be 8+ chars, include uppercase, lowercase, number & special character.";
+        passwordHelp.classList.remove("d-none");
+        return;
+    }
+    passwordHelp.classList.add("d-none");
 
     const name     = document.getElementById("reg_name").value.trim();
     const email    = document.getElementById("reg_email").value.trim();
@@ -98,7 +107,10 @@ function togglePassword(inputId, el) {
     }
 }
 
-
+function validateStrongPassword(password) {
+    const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    return regex.test(password);
+}
 
 function showToast(message, type = "success") {
     const toastEl = document.getElementById("toast");
