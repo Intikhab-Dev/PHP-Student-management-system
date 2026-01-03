@@ -1,5 +1,7 @@
 const API_BASE = "http://localhost/PHP-REST-APIs/api";
-// console.log(localStorage.user);
+
+// console.log(localStorage);
+
 /* REGISTER */
 document.getElementById("registerForm").addEventListener("submit", function(e) {
     e.preventDefault();
@@ -71,7 +73,7 @@ document.getElementById("loginForm").addEventListener("submit", function (e) {
         // later redirect to dashboard or home page
         setTimeout(() => {
             window.location.href = "index.html";
-        }, 2000);
+        }, 1500);
         
     })
     .catch(err => {
@@ -79,6 +81,23 @@ document.getElementById("loginForm").addEventListener("submit", function (e) {
         showToast("Server error", "error");
     });
 });
+
+// Toggle password visibility
+function togglePassword(inputId, el) {
+    const input = document.getElementById(inputId);
+    const icon  = el.querySelector("i");
+
+    if (input.type === "password") {
+        input.type = "text";
+        icon.classList.remove("bi-eye");
+        icon.classList.add("bi-eye-slash");
+    } else {
+        input.type = "password";
+        icon.classList.remove("bi-eye-slash");
+        icon.classList.add("bi-eye");
+    }
+}
+
 
 
 function showToast(message, type = "success") {
