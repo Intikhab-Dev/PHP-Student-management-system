@@ -3,12 +3,14 @@ const limit = 10;
 let currentPage = 1;
 let totalPages = 1;
 
+// console.log(localStorage);
+
 // Render table rows
 function renderTable(students) {
     let rows = "";
     let i = 1;
     if (students) {
-        students.forEach(student => {
+        students.forEach((student) => {
             rows += `
                 <tr>
                     <td>${i++}</td>
@@ -47,13 +49,23 @@ function renderTable(students) {
 function loadStudents(page = 1) {
 
     fetch(API_BASE + `/api-fetch-page.php?page=${page}&limit=${limit}`, {
-        method : "GET"
+        method : "GET",
+        headers: {
+            "Authorization": "Bearer " + localStorage.getItem("auth_token")
+        }
     })
     .then(res => res.json())
     .then(res => {
 
         if (!res.status) {
             document.getElementById("studentsTable").innerHTML = "";
+            showToast(res.message, "error");
+
+            if (handleAuthError(res)){
+                setTimeout(() => {
+                    window.location.href = "auth.html";
+                }, 3000);
+            };
             return;
         }
 
@@ -257,10 +269,84 @@ function showToast(message, type = "success") {
     toast.show();
 }
 
+const toggleBtn = document.getElementById("darkToggle");
+// Load saved preference
+if (toggleBtn){
+    if (localStorage.getItem("theme") === "dark") {
+        document.body.classList.add("dark-mode");
+        toggleBtn.innerHTML = "☀️ Light Mode";
+    }
+
+    toggleBtn.addEventListener("click", () => {
+        document.body.classList.toggle("dark-mode");
+
+        if (document.body.classList.contains("dark-mode")) {
+            localStorage.setItem("theme", "dark");
+            toggleBtn.innerHTML = "☀️ Light Mode";
+        } else {
+            localStorage.setItem("theme", "light");
+            toggleBtn.innerHTML = "🌙 Dark Mode";
+        }
+    });
+}
+
+
 function closeAddModal() {
     const modalEl = document.getElementById('addModal');
     const modal = bootstrap.Modal.getInstance(modalEl);
     modal.hide();
 }
 
+function handleAuthError(response) {
+    if (response.status == false &&
+        response.message &&
+        response.message.toLowerCase().includes("unauthorized")) {
+
+        // clear token
+        localStorage.removeItem("auth_token");
+        localStorage.removeItem("user");
+        return true;
+    }
+    return false;
+}
+
+function logoutUser() {
+    // if (!confirm("Are you sure you want to logout?")) return;
+
+    const token = localStorage.getItem("auth_token");
+    if (!token) {
+        window.location.href = "auth.html";
+        return;
+    }
+
+    fetch(API_BASE + "/api-logout.php", {
+        method: "POST",
+        headers: {
+            "Authorization": "Bearer " + token
+        }
+    })
+    .then(res => res.json())
+    .then(data => {
+
+        // clear local storage
+        localStorage.removeItem("auth_token");
+        localStorage.removeItem("user");
+
+        showToast(data.message || "Logged out", "success");
+
+        setTimeout(() => {
+            window.location.href = "auth.html";
+        }, 1000);
+    })
+    .catch(() => {
+        localStorage.clear();
+        window.location.href = "auth.html";
+    });
+}
+const user = JSON.parse(localStorage.getItem("user"));
+if (user) {
+    document.getElementById("loggedUserName").innerText = user.name;
+}
+
+// Initial load
 loadStudents();
