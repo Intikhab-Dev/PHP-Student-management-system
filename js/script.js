@@ -19,7 +19,7 @@ function renderTable(students) {
                     <td>${student.email}</td>
                     <td>${student.mobile}</td>
                     <td>${student.course}</td>
-                    <td>${student.status = 1 ? "Active" : "Inactive"}</td>
+                    <td>${student.status == 1 ? 'Active' : 'In-Active'}</td>
                     <td>
                         <button class="btn btn-sm btn-info"
                             onclick="openViewModal(${(student.id)})">
@@ -133,7 +133,8 @@ document.getElementById("studentForm").addEventListener("submit", function(e) {
         age: age.value,
         email: email.value,
         mobile: mobile.value,
-        course: course.value
+        course: course.value,
+        status: s_status.value ?? 1
     };
 
     fetch(API_BASE + "/api-insert.php", {
@@ -198,6 +199,7 @@ function openEditModal(id) {
         edit_email.value  = student.email;
         edit_mobile.value = student.mobile;
         edit_course.value = student.course;
+        edit_status.value = student.status ?? 1;
 
         const modalEl = document.getElementById('editModal');
         const modal = new bootstrap.Modal(modalEl);
@@ -211,13 +213,15 @@ function openEditModal(id) {
 
 // Update student
 function updateStudent() {
+
     const data = {
         id: edit_id.value,
         name: edit_name.value,
         age: edit_age.value,
         email: edit_email.value,
         mobile: edit_mobile.value,
-        course: edit_course.value
+        course: edit_course.value,
+        status: edit_status.value ?? 1
     };
 
     fetch(API_BASE + "/api-update.php", {
@@ -260,7 +264,7 @@ function openViewModal(id) {
         document.getElementById("view_mobile").innerText = student.mobile;
         document.getElementById("view_course").innerText = student.course;
         document.getElementById("view_status").innerText =
-            student.status == 1 ? "Active" : "Inactive";
+            student.status == 1 ? "Active" : "In-Active";
 
         const modal = new bootstrap.Modal(
             document.getElementById("viewModal")
@@ -387,6 +391,8 @@ const user = JSON.parse(localStorage.getItem("user"));
 if (user) {
     document.getElementById("loggedUserName").innerText = user.name;
 }
+
+document.getElementById("year").innerText = new Date().getFullYear();
 
 // Initial load
 loadStudents();
