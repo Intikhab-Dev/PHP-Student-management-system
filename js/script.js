@@ -21,13 +21,17 @@ function renderTable(students) {
                     <td>${student.course}</td>
                     <td>${student.status = 1 ? "Active" : "Inactive"}</td>
                     <td>
-                        <button class="btn btn-sm btn-success"
-                            onclick="openEditModal(${(student.id)})">
-                            Edit
+                        <button class="btn btn-sm btn-info"
+                            onclick="openViewModal(${(student.id)})">
+                            <i class="bi bi-eye"></i> View
                         </button>
-                        <button class="btn btn-sm btn-danger"
+                        <button class="btn btn-sm btn-success ms-1"
+                            onclick="openEditModal(${(student.id)})">
+                            <i class="bi bi-pencil-square"></i> Edit
+                        </button>
+                        <button class="btn btn-sm btn-danger ms-1"
                             onclick="deleteStudent(${student.id})">
-                            Delete
+                            <i class="bi bi-trash"></i> Delete
                         </button>
                     </td>
                 </tr>
@@ -230,6 +234,42 @@ function updateStudent() {
         }
         closeEditModal();
         loadStudents();
+    });
+}
+
+function openViewModal(id) {
+    fetch(API_BASE + "/api-fetch-single.php?id=" + id)
+    .then(res => res.json())
+    .then(res => {
+        let student = res;
+
+        if (Array.isArray(res)) {
+            student = res[0];
+        } else if (res.data && Array.isArray(res.data)) {
+            student = res.data[0];
+        }
+
+        if (!student) {
+            showToast("Student data not found", "error");
+            return;
+        }
+
+        document.getElementById("view_name").innerText   = student.name;
+        document.getElementById("view_age").innerText    = student.age;
+        document.getElementById("view_email").innerText  = student.email;
+        document.getElementById("view_mobile").innerText = student.mobile;
+        document.getElementById("view_course").innerText = student.course;
+        document.getElementById("view_status").innerText =
+            student.status == 1 ? "Active" : "Inactive";
+
+        const modal = new bootstrap.Modal(
+            document.getElementById("viewModal")
+        );
+        modal.show();
+    })
+    .catch(err => {
+        console.error(err);
+        showToast("Failed to load record", "error");
     });
 }
 

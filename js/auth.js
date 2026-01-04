@@ -81,7 +81,8 @@ document.getElementById("loginForm").addEventListener("submit", function (e) {
 
         // later redirect to dashboard or home page
         setTimeout(() => {
-            window.location.href = "index.html";
+            // window.location.href = "index.html";
+            window.location.href = "dashboard.html";
         }, 1500);
         
     })
