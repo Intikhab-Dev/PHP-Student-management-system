@@ -1,8 +1,7 @@
-const API_BASE = "http://localhost/PHP-REST-APIs"; 
-const limit = 5;
+const API_BASE = "http://localhost/PHP-REST-APIs/api";
+const limit = 10;
 let currentPage = 1;
 let totalPages = 1;
-
 
 // Render table rows
 function renderTable(students) {
@@ -39,71 +38,75 @@ function renderTable(students) {
 }
 
 // Fetch all students
-function loadStudents() {
-    fetch(API_BASE + "/api-fetch-all.php")
+// function loadStudents() {
+//     fetch(API_BASE + "/api-fetch-all.php")
+//     .then(res => res.json())
+//     .then(data => renderTable(data));
+// }
+
+function loadStudents(page = 1) {
+
+    fetch(API_BASE + `/api-fetch-page.php?page=${page}&limit=${limit}`, {
+        method : "GET"
+    })
     .then(res => res.json())
-    .then(data => renderTable(data));
+    .then(res => {
+
+        if (!res.status) {
+            document.getElementById("studentsTable").innerHTML = "";
+            return;
+        }
+
+        currentPage = res.page;
+        totalPages  = res.total_pages;
+
+        renderTable(res.data);
+        renderPagination();
+    })
+    .catch(err => {
+        console.error(err);
+        showToast("Failed to load student", "error");
+    });
 }
 
-// function loadStudents(page = 1) {
+function renderPagination() {
 
-//     fetch(API_BASE + `/api-fetch-paginated.php?page=${page}&limit=${limit}`, {
-//         method : "GET"
-//     })
-//     .then(res => res.json())
-//     .then(res => {
+    let html = "";
 
-//         if (!res.status) {
-//             document.getElementById("studentsTable").innerHTML = "";
-//             return;
-//         }
+    /* Prev button */
+    html += `
+        <li class="page-item ${currentPage === 1 ? 'disabled' : ''}">
+            <a class="page-link" href="javascript:void(0)"
+               onclick="loadStudents(${currentPage - 1})">
+               < Prev
+            </a>
+        </li>
+    `;
 
-//         currentPage = res.page;
-//         totalPages  = res.total_pages;
+    /* Page numbers */
+    for (let i = 1; i <= totalPages; i++) {
+        html += `
+            <li class="page-item ${i === currentPage ? 'active' : ''}">
+                <a class="page-link" href="javascript:void(0)"
+                   onclick="loadStudents(${i})">
+                   ${i}
+                </a>
+            </li>
+        `;
+    }
 
-//         renderTable(res.data);
-//         renderPagination();
-//     })
-//     .catch(err => console.error(err));
-// }
+    /* Next button */
+    html += `
+        <li class="page-item ${currentPage === totalPages ? 'disabled' : ''}">
+            <a class="page-link" href="javascript:void(0)"
+               onclick="loadStudents(${currentPage + 1})">
+               Next >
+            </a>
+        </li>
+    `;
 
-// function renderPagination() {
-
-//     let html = "";
-//     /* 🔹 Prev button */
-//     html += `
-//         <li class="page-item ${currentPage === 1 ? 'disabled' : ''}">
-//             <a class="page-link" href="javascript:void(0)"
-//                onclick="loadStudents(${currentPage - 1})">
-//                Prev
-//             </a>
-//         </li>
-//     `;
-
-//     /* 🔹 Page numbers */
-//     for (let i = 1; i <= totalPages; i++) {
-//         html += `
-//             <li class="page-item ${i === currentPage ? 'active' : ''}">
-//                 <a class="page-link" href="javascript:void(0)"
-//                    onclick="loadStudents(${i})">
-//                    ${i}
-//                 </a>
-//             </li>
-//         `;
-//     }
-
-//     /* 🔹 Next button */
-//     html += `
-//         <li class="page-item ${currentPage === totalPages ? 'disabled' : ''}">
-//             <a class="page-link" href="javascript:void(0)"
-//                onclick="loadStudents(${currentPage + 1})">
-//                Next
-//             </a>
-//         </li>
-//     `;
-
-//     document.getElementById("pagination").innerHTML = html;
-// }
+    document.getElementById("pagination").innerHTML = html;
+}
 
 // Add student
 document.getElementById("studentForm").addEventListener("submit", function(e) {
