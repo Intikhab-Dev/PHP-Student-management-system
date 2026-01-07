@@ -108,6 +108,66 @@ function renderPagination() {
     document.getElementById("pagination").innerHTML = html;
 }
 
+// function loadStudents(page = 1) {
+
+//     fetch(API_BASE + `/api-fetch-paginated.php?page=${page}&limit=${limit}`, {
+//         method : "GET"
+//     })
+//     .then(res => res.json())
+//     .then(res => {
+
+//         if (!res.status) {
+//             document.getElementById("studentsTable").innerHTML = "";
+//             return;
+//         }
+
+//         currentPage = res.page;
+//         totalPages  = res.total_pages;
+
+//         renderTable(res.data);
+//         renderPagination();
+//     })
+//     .catch(err => console.error(err));
+// }
+
+// function renderPagination() {
+
+//     let html = "";
+//     /* 🔹 Prev button */
+//     html += `
+//         <li class="page-item ${currentPage === 1 ? 'disabled' : ''}">
+//             <a class="page-link" href="javascript:void(0)"
+//                onclick="loadStudents(${currentPage - 1})">
+//                Prev
+//             </a>
+//         </li>
+//     `;
+
+//     /* 🔹 Page numbers */
+//     for (let i = 1; i <= totalPages; i++) {
+//         html += `
+//             <li class="page-item ${i === currentPage ? 'active' : ''}">
+//                 <a class="page-link" href="javascript:void(0)"
+//                    onclick="loadStudents(${i})">
+//                    ${i}
+//                 </a>
+//             </li>
+//         `;
+//     }
+
+//     /* 🔹 Next button */
+//     html += `
+//         <li class="page-item ${currentPage === totalPages ? 'disabled' : ''}">
+//             <a class="page-link" href="javascript:void(0)"
+//                onclick="loadStudents(${currentPage + 1})">
+//                Next
+//             </a>
+//         </li>
+//     `;
+
+//     document.getElementById("pagination").innerHTML = html;
+// }
+
 // Add student
 document.getElementById("studentForm").addEventListener("submit", function(e) {
     e.preventDefault();
