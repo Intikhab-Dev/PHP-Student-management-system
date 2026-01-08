@@ -19,15 +19,19 @@ function renderTable(students) {
                     <td>${student.email}</td>
                     <td>${student.mobile}</td>
                     <td>${student.course}</td>
-                    <td>${student.status = 1 ? "Active" : "Inactive"}</td>
+                    <td>${student.status == 1 ? 'Active' : 'In-Active'}</td>
                     <td>
-                        <button class="btn btn-sm btn-success"
-                            onclick="openEditModal(${(student.id)})">
-                            Edit
+                        <button class="btn btn-sm btn-info"
+                            onclick="openViewModal(${(student.id)})">
+                            <i class="bi bi-eye"></i> View
                         </button>
-                        <button class="btn btn-sm btn-danger"
+                        <button class="btn btn-sm btn-success ms-1"
+                            onclick="openEditModal(${(student.id)})">
+                            <i class="bi bi-pencil-square"></i> Edit
+                        </button>
+                        <button class="btn btn-sm btn-danger ms-1"
                             onclick="deleteStudent(${student.id})">
-                            Delete
+                            <i class="bi bi-trash"></i> Delete
                         </button>
                     </td>
                 </tr>
@@ -129,7 +133,8 @@ document.getElementById("studentForm").addEventListener("submit", function(e) {
         age: age.value,
         email: email.value,
         mobile: mobile.value,
-        course: course.value
+        course: course.value,
+        status: s_status.value ?? 1
     };
 
     fetch(API_BASE + "/api-insert.php", {
@@ -194,6 +199,7 @@ function openEditModal(id) {
         edit_email.value  = student.email;
         edit_mobile.value = student.mobile;
         edit_course.value = student.course;
+        edit_status.value = student.status ?? 1;
 
         const modalEl = document.getElementById('editModal');
         const modal = new bootstrap.Modal(modalEl);
@@ -207,13 +213,15 @@ function openEditModal(id) {
 
 // Update student
 function updateStudent() {
+
     const data = {
         id: edit_id.value,
         name: edit_name.value,
         age: edit_age.value,
         email: edit_email.value,
         mobile: edit_mobile.value,
-        course: edit_course.value
+        course: edit_course.value,
+        status: edit_status.value ?? 1
     };
 
     fetch(API_BASE + "/api-update.php", {
@@ -230,6 +238,42 @@ function updateStudent() {
         }
         closeEditModal();
         loadStudents();
+    });
+}
+
+function openViewModal(id) {
+    fetch(API_BASE + "/api-fetch-single.php?id=" + id)
+    .then(res => res.json())
+    .then(res => {
+        let student = res;
+
+        if (Array.isArray(res)) {
+            student = res[0];
+        } else if (res.data && Array.isArray(res.data)) {
+            student = res.data[0];
+        }
+
+        if (!student) {
+            showToast("Student data not found", "error");
+            return;
+        }
+
+        document.getElementById("view_name").innerText   = student.name;
+        document.getElementById("view_age").innerText    = student.age;
+        document.getElementById("view_email").innerText  = student.email;
+        document.getElementById("view_mobile").innerText = student.mobile;
+        document.getElementById("view_course").innerText = student.course;
+        document.getElementById("view_status").innerText =
+            student.status == 1 ? "Active" : "In-Active";
+
+        const modal = new bootstrap.Modal(
+            document.getElementById("viewModal")
+        );
+        modal.show();
+    })
+    .catch(err => {
+        console.error(err);
+        showToast("Failed to load record", "error");
     });
 }
 
@@ -311,8 +355,6 @@ function handleAuthError(response) {
 }
 
 function logoutUser() {
-    // if (!confirm("Are you sure you want to logout?")) return;
-
     const token = localStorage.getItem("auth_token");
     if (!token) {
         window.location.href = "auth.html";
@@ -347,6 +389,8 @@ const user = JSON.parse(localStorage.getItem("user"));
 if (user) {
     document.getElementById("loggedUserName").innerText = user.name;
 }
+
+document.getElementById("year").innerText = new Date().getFullYear();
 
 // Initial load
 loadStudents();
