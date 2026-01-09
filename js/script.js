@@ -8,7 +8,7 @@ function renderTable(students) {
     let rows = "";
     let i = 1;
     if (students) {
-        students.forEach(student => {
+        students.forEach((student) => {
             rows += `
                 <tr>
                     <td>${i++}</td>
@@ -295,6 +295,28 @@ function showToast(message, type = "success") {
     const toast = new bootstrap.Toast(toastEl, { delay: 3000 });
     toast.show();
 }
+
+const toggleBtn = document.getElementById("darkToggle");
+// Load saved preference
+if (toggleBtn){
+    if (localStorage.getItem("theme") === "dark") {
+        document.body.classList.add("dark-mode");
+        toggleBtn.innerHTML = "☀️ Light Mode";
+    }
+
+    toggleBtn.addEventListener("click", () => {
+        document.body.classList.toggle("dark-mode");
+
+        if (document.body.classList.contains("dark-mode")) {
+            localStorage.setItem("theme", "dark");
+            toggleBtn.innerHTML = "☀️ Light Mode";
+        } else {
+            localStorage.setItem("theme", "light");
+            toggleBtn.innerHTML = "🌙 Dark Mode";
+        }
+    });
+}
+
 
 function closeAddModal() {
     const modalEl = document.getElementById('addModal');
