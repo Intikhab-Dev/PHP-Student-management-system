@@ -11,77 +11,81 @@
     <!-- Icons -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
 
-    <style>
-        /* body {
-            background: linear-gradient(135deg, #1d2671, #c33764);
-            min-height: 100vh;
-        } */
+<style>
+    /* body {
+        background: linear-gradient(135deg, #1d2671, #c33764);
+        min-height: 100vh;
+    } */
 
-        body {
-            min-height: 100vh;
-            background: linear-gradient(
-                -45deg,
-                #1d2671,
-                #c33764,
-                #667eea,
-                #764ba2
-            );
-            background-size: 400% 400%;
-            animation: gradientBG 12s ease infinite;
-        }
+    body {
+        min-height: 100vh;
+        background: linear-gradient(
+            -45deg,
+            #1d2671,
+            #c33764,
+            #667eea,
+            #764ba2
+        );
+        background-size: 400% 400%;
+        animation: gradientBG 12s ease infinite;
+    }
 
-        @keyframes gradientBG {
-            0% {
-                background-position: 0% 50%;
-            }
-            50% {
-                background-position: 100% 50%;
-            }
-            100% {
-                background-position: 0% 50%;
-            }
+    @keyframes gradientBG {
+        0% {
+            background-position: 0% 50%;
         }
+        50% {
+            background-position: 100% 50%;
+        }
+        100% {
+            background-position: 0% 50%;
+        }
+    }
 
-        .auth-wrapper {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
+    .auth-wrapper {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
 
-        .auth-card {
-            border-radius: 14px;
-            overflow: hidden;
-        }
+    .auth-card {
+        border-radius: 14px;
+        overflow: hidden;
+    }
 
-        .auth-left {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: #fff;
-            padding: 40px;
-        }
+    .auth-left {
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        color: #fff;
+        padding: 40px;
+    }
 
-        .auth-left h2 {
-            font-weight: 700;
-        }
+    .auth-left h2 {
+        font-weight: 700;
+    }
 
-        .auth-right {
-            padding: 40px;
-        }
+    .auth-right {
+        padding: 40px;
+    }
 
-        .form-control {
-            height: 45px;
-            border-radius: 8px;
-        }
+    .form-control {
+        height: 45px;
+        border-radius: 8px;
+    }
 
-        .btn {
-            height: 45px;
-            border-radius: 8px;
-        }
+    .btn {
+        height: 45px;
+        border-radius: 8px;
+    }
 
-        .nav-pills .nav-link {
-            border-radius: 8px;
-        }
-    </style>
+    .nav-pills .nav-link {
+        border-radius: 8px;
+    }
+
+    .cursor-pointer {
+        cursor: pointer;
+    }
+</style>
 </head>
 <body>
     <div class="toast-container position-fixed top-0 end-0 p-3">
@@ -149,6 +153,9 @@
                                             <div class="input-group">
                                                 <span class="input-group-text"><i class="bi bi-lock"></i></span>
                                                 <input type="password" id="login_password" class="form-control" placeholder="Password" required>
+                                                <span class="input-group-text cursor-pointer" onclick="togglePassword('login_password', this)">
+                                                    <i class="bi bi-eye"></i>
+                                                </span>
                                             </div>
                                         </div>
 
@@ -180,7 +187,12 @@
 
                                         <div class="mb-3">
                                             <label>Password</label>
-                                            <input type="password" id="reg_password" class="form-control" placeholder="Password" required>
+                                            <div class="input-group">
+                                                <input type="password" id="reg_password" class="form-control" placeholder="Password" required>
+                                                <span class="input-group-text cursor-pointer" onclick="togglePassword('reg_password', this)">
+                                                    <i class="bi bi-eye"></i>
+                                                </span>
+                                            </div>
                                         </div>
 
                                         <button class="btn btn-success w-100">
