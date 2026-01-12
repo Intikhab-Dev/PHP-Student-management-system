@@ -71,7 +71,7 @@ body.dark-mode #toast {
 }
 
 .custom-navbar {
-    background: linear-gradient(135deg, #457cca, #0b1b3e);
+    background: linear-gradient(135deg, #1d2671, #c33764);
     box-shadow: 0 8px 20px rgba(0,0,0,0.25);
     border: 1px solid rgba(255,255,255,0.08);
 }
