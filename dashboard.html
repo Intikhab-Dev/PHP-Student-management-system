@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Dashboard | Student Management</title>
@@ -17,9 +18,9 @@
         }
 
         .glass {
-            background: rgba(255,255,255,0.9);
+            background: rgba(255, 255, 255, 0.9);
             border-radius: 14px;
-            box-shadow: 0 10px 25px rgba(0,0,0,.15);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, .15);
         }
 
         .stat-card h3 {
@@ -34,6 +35,18 @@
         .navbar-brand {
             font-weight: 700;
             letter-spacing: .5px;
+        }
+
+        .glass {
+            transition: all .3s ease;
+        }
+
+        .glass:hover {
+            transform: translateY(-4px);
+        }
+
+        .chart-box {
+            height: 320px;
         }
     </style>
 </head>
@@ -67,114 +80,120 @@
         </div>
     </div>
 
-<!-- Navbar -->
-<nav class="navbar navbar-expand-lg navbar-dark px-4">
-    <a class="navbar-brand" href="#">🎓 Student-MS</a>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark px-4">
+        <a class="navbar-brand" href="#">🎓 Student-MS</a>
 
-    <div class="ms-auto d-flex align-items-center text-white">
-        <i class="bi bi-person-circle fs-5 me-2"></i>
-        <span class="fw-semibold" id="loggedUserName">Welcome, User</span>
+        <div class="ms-auto d-flex align-items-center text-white">
+            <i class="bi bi-person-circle fs-5 me-2"></i>
+            <span class="fw-semibold" id="loggedUserName">Welcome, User</span>
 
-        <button class="btn btn-outline-light btn-sm ms-3" data-bs-toggle="modal" data-bs-target="#logoutModal">
-            <i class="bi bi-box-arrow-right"></i> Logout
-        </button>
-    </div>
-</nav>
+            <button class="btn btn-outline-light btn-sm ms-3" data-bs-toggle="modal" data-bs-target="#logoutModal">
+                <i class="bi bi-box-arrow-right"></i> Logout
+            </button>
+        </div>
+    </nav>
 
-<!-- Main -->
-<div class="container py-4">
+    <!-- Main -->
+    <div class="container py-4">
 
-    <!-- Page Header -->
-    <div class="d-flex justify-content-between align-items-center mb-4 text-white">
-        <h3 class="fw-bold mb-0">Dashboard</h3>
+        <!-- Page Header -->
+        <div class="d-flex justify-content-between align-items-center mb-4 text-white">
+            <h3 class="fw-bold mb-0">Dashboard</h3>
 
-        <button class="btn btn-light btn-sm fw-semibold"
-                onclick="window.location.href='index.html'">
-            Manage Students →
-        </button>
-    </div>
+            <button class="btn btn-light btn-sm fw-semibold" onclick="window.location.href='index.html'">
+                Manage Students →
+            </button>
+        </div>
 
-    <!-- Stats -->
-    <div class="row g-3 mb-4">
-        <div class="col-md-3">
-            <div class="glass p-3 stat-card d-flex justify-content-between align-items-center">
-                <div>
-                    <small>Total Students</small>
-                    <h3 id="totalStudents">0</h3>
+        <!-- Stats -->
+        <div class="row g-3 mb-4">
+            <div class="col-md-3">
+                <div class="glass p-3 stat-card d-flex justify-content-between align-items-center">
+                    <div>
+                        <small>Total Students</small>
+                        <h3 id="totalStudents">0</h3>
+                    </div>
+                    <i class="bi bi-people-fill text-primary"></i>
                 </div>
-                <i class="bi bi-people-fill text-primary"></i>
+            </div>
+
+            <div class="col-md-3">
+                <div class="glass p-3 stat-card d-flex justify-content-between align-items-center">
+                    <div>
+                        <small>Active Students</small>
+                        <h3 id="activeStudents">0</h3>
+                    </div>
+                    <i class="bi bi-person-check-fill text-success"></i>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="glass p-3 stat-card d-flex justify-content-between align-items-center">
+                    <div>
+                        <small>Today Added</small>
+                        <h3 id="todayStudents">0</h3>
+                    </div>
+                    <i class="bi bi-calendar-check-fill text-warning"></i>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="glass p-3 stat-card d-flex justify-content-between align-items-center">
+                    <div>
+                        <small>This Month</small>
+                        <h3 id="monthStudents">0</h3>
+                    </div>
+                    <i class="bi bi-graph-up-arrow text-danger"></i>
+                </div>
             </div>
         </div>
 
-        <div class="col-md-3">
-            <div class="glass p-3 stat-card d-flex justify-content-between align-items-center">
-                <div>
-                    <small>Active Students</small>
-                    <h3 id="activeStudents">0</h3>
-                </div>
-                <i class="bi bi-person-check-fill text-success"></i>
+        <!-- Recent Students -->
+        <div class="glass mb-4">
+            <div class="p-3 fw-semibold border-bottom">
+                🕒 Recent Students
+            </div>
+
+            <div class="table-responsive">
+                <table class="table table-hover mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Name</th>
+                            <th>Course</th>
+                            <th>Status</th>
+                            <th>Date & Time</th>
+                        </tr>
+                    </thead>
+                    <tbody id="recentStudents">
+                        <tr>
+                            <td colspan="3" class="text-center text-muted py-3">
+                                No data yet
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
 
-        <div class="col-md-3">
-            <div class="glass p-3 stat-card d-flex justify-content-between align-items-center">
-                <div>
-                    <small>Today Added</small>
-                    <h3 id="todayStudents">0</h3>
-                </div>
-                <i class="bi bi-calendar-check-fill text-warning"></i>
+        <!-- Chart -->
+        <div class="glass">
+            <div class="p-3 fw-semibold border-bottom">
+                📊 Course-wise Students
+            </div>
+            <div class="glass chart-box p-3">
+                <canvas id="courseChart"></canvas>
             </div>
         </div>
 
-        <div class="col-md-3">
-            <div class="glass p-3 stat-card d-flex justify-content-between align-items-center">
-                <div>
-                    <small>This Month</small>
-                    <h3 id="monthStudents">0</h3>
-                </div>
-                <i class="bi bi-graph-up-arrow text-danger"></i>
-            </div>
-        </div>
+        <!-- <div class="glass p-3 mt-4">
+            <div class="fw-semibold mb-2">🟢 Student Status</div>
+            <canvas id="statusDonutChart"></canvas>
+        </div> -->
+
     </div>
-
-    <!-- Recent Students -->
-    <div class="glass mb-4">
-        <div class="p-3 fw-semibold border-bottom">
-            🕒 Recent Students
-        </div>
-
-        <div class="table-responsive">
-            <table class="table table-hover mb-0">
-                <thead class="table-light">
-                    <tr>
-                        <th>Name</th>
-                        <th>Course</th>
-                        <th>Date</th>
-                    </tr>
-                </thead>
-                <tbody id="recentStudents">
-                    <tr>
-                        <td colspan="3" class="text-center text-muted py-3">
-                            No data yet
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-
-    <!-- Chart -->
-    <div class="glass">
-        <div class="p-3 fw-semibold border-bottom">
-            📊 Course-wise Students
-        </div>
-        <div class="p-3">
-            <canvas id="courseChart" height="100"></canvas>
-        </div>
-    </div>
-
-</div>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-<script src="js/dashboard.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/dashboard.js"></script>
 </body>
+
 </html>
