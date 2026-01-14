@@ -247,3 +247,5 @@ function showToast(message, type = "success") {
     toast.show();
 }
 
+document.getElementById("year").innerText = new Date().getFullYear();
+

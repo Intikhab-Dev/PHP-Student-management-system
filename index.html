@@ -64,8 +64,15 @@
                         <div class="col-md-6">
                             <input type="text" id="mobile" class="form-control" placeholder="Mobile" required>
                         </div>
-                        <div class="col-md-12">
+                        <div class="col-md-6">
                             <input type="text" id="course" class="form-control" placeholder="Course" required>
+                        </div>
+                        <div class="col-md-6">
+                            <select type="text" id="s_status" class="form-select" required>
+                                <option> --Select Status-- </option>
+                                <option value="1">Active</option>
+                                <option value="0">In-Active</option>
+                            </select>
                         </div>
                     </div>
 
@@ -82,7 +89,6 @@
     <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-centered">
             <div class="modal-content">
-
                 <div class="modal-header bg-primary text-white">
                     <h5 class="modal-title">Edit Student</h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
@@ -93,27 +99,36 @@
 
                     <div class="mb-3">
                         <label class="form-label" for="edit_name">Name</label>
-                        <input type="text" id="edit_name" class="form-control">
+                        <input type="text" id="edit_name" class="form-control" required>
                     </div>
 
                     <div class="mb-3">
                         <label class="form-label" for="edit_age">Age</label>
-                        <input type="number" id="edit_age" class="form-control">
+                        <input type="number" id="edit_age" class="form-control" required>
                     </div>
 
                     <div class="mb-3">
                         <label class="form-label" for="edit_email">Email</label>
-                        <input type="email" id="edit_email" class="form-control">
+                        <input type="email" id="edit_email" class="form-control" required>
                     </div>
 
                     <div class="mb-3">
                         <label class="form-label" for="edit_mobile">Mobile</label>
-                        <input type="text" id="edit_mobile" class="form-control">
+                        <input type="text" id="edit_mobile" class="form-control" required>
                     </div>
 
                     <div class="mb-3">
                         <label class="form-label" for="edit_course">Course</label>
-                        <input type="text" id="edit_course" class="form-control">
+                        <input type="text" id="edit_course" class="form-control" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label" for="edit_status">Status</label>
+                        <select type="text" id="edit_status" class="form-select" required>
+                            <option> --Select Status-- </option>
+                            <option value="1">Active</option>
+                            <option value="0">In-Active</option>
+                        </select>
                     </div>
                 </div>
 
@@ -180,7 +195,7 @@
 
                     <!-- Left: Title -->
                     <span class="navbar-brand fw-bold text-white" id="head">
-                        📚 Student Management
+                        <a href="dashboard.html">📚</a> Student Management
                     </span>
 
                     <!-- Right -->
@@ -240,6 +255,24 @@
         </div>
     </div>
 
+    <footer class="app-footer mt-5">
+        <div class="container-fluid">
+            <div class="row align-items-center">
+                <div class="col-md-6 text-md-start text-center mb-2 mb-md-0">
+                    © <span id="year"></span> |
+                    <strong>Student Management System</strong>.
+                    | All rights reserved.
+                </div>
+
+                <div class="col-md-6 text-md-end text-center">
+                    <span class="me-3">Built with ❤️ using Core PHP</span>
+                    <a href="#" class="footer-link">Privacy</a>
+                    <a href="#" class="footer-link">Terms</a>
+                    <a href="#" class="footer-link">Support</a>
+                </div>
+            </div>
+        </div>
+    </footer>
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>

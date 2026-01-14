@@ -10,11 +10,11 @@
     $student_email = $data['email'];
     $student_mobile = $data['mobile'];
     $student_cource = $data['course'];
+    $studdent_status = $data['status'];
 
     $sql = "UPDATE students SET name='{$student_name}', age='{$studdent_age}',
                                 email='{$student_email}', mobile='{$student_mobile}',
-                                course='{$student_cource}' WHERE id = {$student_id}";
-
+                                course='{$student_cource}', status='{$studdent_status}' WHERE id = {$student_id}";
     if(mysqli_query($conn, $sql)){
         echo json_encode(array('message' => 'Student Updated Successfully.', 'status' => true));
     } else {
