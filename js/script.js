@@ -394,8 +394,6 @@ function handleAuthError(response) {
 }
 
 function logoutUser() {
-    // if (!confirm("Are you sure you want to logout?")) return;
-
     const token = localStorage.getItem("auth_token");
     if (!token) {
         window.location.href = "auth.html";
