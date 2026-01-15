@@ -12,10 +12,23 @@ if (user) {
 
 // Load stats
 function loadDashboardStats() {
-    fetch(API_BASE + "/api-dashboard-stats.php")
+    fetch(API_BASE + "/api-dashboard-stats.php", {
+        method: "GET",
+        headers: {
+            "Authorization": "Bearer " + localStorage.getItem("auth_token")
+        }
+    })
     .then(res => res.json())
     .then(res => {
-        if (!res.status) return;
+        if (!res.status) {
+            showToast(res.message, "error");
+            if (handleAuthError(res)){
+                setTimeout(() => {
+                    window.location.href = "auth.html";
+                }, 3000);
+            };
+            return;
+        }
 
         document.getElementById("totalStudents").innerText  = res.data.total;
         document.getElementById("activeStudents").innerText = res.data.active;
@@ -132,68 +145,6 @@ function loadCourseChart() {
     });
 }
 
-// let statusChartInstance = null;
-// function loadStatusDonutChart() {
-//     fetch(API_BASE + "/api-dashboard-stats.php")
-//     .then(res => res.json())
-//     .then(res => {
-//         if (!res.status) return;
-
-//         const active = parseInt(res.data.active);
-//         const inactive = parseInt(res.data.inactive);
-
-//         const ctx = document
-//             .getElementById("statusDonutChart")
-//             .getContext("2d");
-
-//         if (statusChartInstance) {
-//             statusChartInstance.destroy();
-//         }
-
-//         statusChartInstance = new Chart(ctx, {
-//             type: "doughnut",
-//             data: {
-//                 labels: ["Active", "Inactive"],
-//                 datasets: [{
-//                     data: [active, inactive],
-//                     backgroundColor: [
-//                         "#22C55E", // green
-//                         "#EF4444"  // red
-//                     ],
-//                     borderWidth: 0,
-//                     hoverOffset: 10
-//                 }]
-//             },
-//             options: {
-//                 cutout: "70%",
-//                 plugins: {
-//                     legend: {
-//                         position: "bottom",
-//                         labels: {
-//                             padding: 15,
-//                             font: { weight: "600" }
-//                         }
-//                     },
-//                     tooltip: {
-//                         backgroundColor: "#0f172a",
-//                         titleColor: "#fff",
-//                         bodyColor: "#e5e7eb",
-//                         padding: 10,
-//                         cornerRadius: 8
-//                     }
-//                 },
-//                 animation: {
-//                     animateScale: true,
-//                     animateRotate: true,
-//                     duration: 1200,
-//                     easing: "easeOutCirc"
-//                 }
-//             }
-//         });
-//     });
-// }
-
-
 document.addEventListener("DOMContentLoaded", () => {
     loadDashboardStats();
     loadRecentStudents();
@@ -201,6 +152,18 @@ document.addEventListener("DOMContentLoaded", () => {
     // loadStatusDonutChart();
 });
 
+function handleAuthError(response) {
+    if (response.status == false &&
+        response.message &&
+        response.message.toLowerCase().includes("unauthorized")) {
+
+        // clear token
+        localStorage.removeItem("auth_token");
+        localStorage.removeItem("user");
+        return true;
+    }
+    return false;
+}
 
 function logoutUser() {
     const token = localStorage.getItem("auth_token");
@@ -233,6 +196,7 @@ function logoutUser() {
         window.location.href = "auth.html";
     });
 }
+
 function showToast(message, type = "success") {
     const toastEl = document.getElementById("toast");
     const toastBody = toastEl.querySelector(".toast-body");

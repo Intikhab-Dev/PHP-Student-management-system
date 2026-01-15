@@ -50,8 +50,7 @@ function renderTable(students) {
 //     .then(data => renderTable(data));
 // }
 
-function loadStudents(page = 1) {
-
+function loadStudents(page = 1) {    
     fetch(API_BASE + `/api-fetch-page.php?page=${page}&limit=${limit}`, {
         method : "GET",
         headers: {

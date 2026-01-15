@@ -1,9 +1,9 @@
 <?php
+include 'auth-check.php';
 include 'config.php';
 include 'db.php';
 
 $data = [];
-
 // Total students
 $sql = "SELECT COUNT(*) AS total FROM students";
 $data['total'] = mysqli_fetch_assoc(mysqli_query($conn, $sql))['total'];
