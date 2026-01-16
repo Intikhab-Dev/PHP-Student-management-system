@@ -7,9 +7,10 @@ $headers = getallheaders();
 
 /* token check */
 if (!isset($headers['Authorization'])) {
+    http_response_code(401);
     echo json_encode([
         'status' => false,
-        'message' => 'Unauthorized - Token missing'
+        'message' => 'Unauthorized: Token missing'
     ]);
     exit;
 }
@@ -23,15 +24,17 @@ $sql = "
     FROM user_tokens
     WHERE token = '$token'
       AND is_active = 1
+      AND expires_at > NOW()
     LIMIT 1
 ";
 
 $result = mysqli_query($conn, $sql);
 
 if (mysqli_num_rows($result) === 0) {
+    http_response_code(401);
     echo json_encode([
         'status' => false,
-        'message' => 'Unauthorized User - Invalid token'
+        'message' => 'Unauthorized: Token expired or invalid'
     ]);
     exit;
 }

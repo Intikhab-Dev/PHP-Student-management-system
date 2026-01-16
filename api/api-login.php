@@ -49,12 +49,13 @@ if (!password_verify($password, $user['password'])) {
 
 /* generate token */
 $token = bin2hex(random_bytes(32));
+$expiry = date('Y-m-d 00:00:00', strtotime('+1 day'));
 
 /* save token */
 $userId = $user['id'];
 $insertToken = "
-    INSERT INTO user_tokens (user_id, token)
-    VALUES ('$userId', '$token')
+    INSERT INTO user_tokens (user_id, token, expires_at)
+    VALUES ('$userId', '$token', '$expiry')
 ";
 
 mysqli_query($conn, $insertToken);
