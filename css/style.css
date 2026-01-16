@@ -86,7 +86,7 @@ a {
     bottom: 0;
     left: 0;
     width: 100%;
-    z-index: 1030;
+    z-index: 100;
 
     background: linear-gradient(135deg, #1b4cb5, #223857);
     color: #d1d5db;
