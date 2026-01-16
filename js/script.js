@@ -21,7 +21,7 @@ function renderTable(students) {
                     <td>${student.course}</td>
                     <td>${student.status == 1 ? 'Active' : 'In-Active'}</td>
                     <td>
-                        <button class="btn btn-sm btn-info"
+                        <button class="btn btn-sm btn-light"
                             onclick="openViewModal(${(student.id)})">
                             <i class="bi bi-eye"></i> View
                         </button>
@@ -63,7 +63,6 @@ function loadStudents(page = 1) {
         if (!res.status) {
             document.getElementById("studentsTable").innerHTML = "";
             showToast(res.message, "error");
-
             if (handleAuthError(res)){
                 setTimeout(() => {
                     window.location.href = "auth.html";
@@ -380,10 +379,22 @@ function closeAddModal() {
 }
 
 function handleAuthError(response) {
+    const token = localStorage.getItem("auth_token");
+    if (!token) {
+        window.location.href = "auth.html";
+        return false;
+    }
     if (response.status == false &&
         response.message &&
         response.message.toLowerCase().includes("unauthorized")) {
-
+        
+        fetch(API_BASE + "/api-logout.php", {
+            method: "POST",
+            headers: {
+                "Authorization": "Bearer " + token
+            }
+        })
+        
         // clear token
         localStorage.removeItem("auth_token");
         localStorage.removeItem("user");

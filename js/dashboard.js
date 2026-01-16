@@ -153,10 +153,21 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 function handleAuthError(response) {
+    const token = localStorage.getItem("auth_token");
+    if (!token) {
+        window.location.href = "auth.html";
+        return false;
+    }
     if (response.status == false &&
         response.message &&
         response.message.toLowerCase().includes("unauthorized")) {
 
+        fetch(API_BASE + "/api-logout.php", {
+            method: "POST",
+            headers: {
+                "Authorization": "Bearer " + token
+            }
+        })
         // clear token
         localStorage.removeItem("auth_token");
         localStorage.removeItem("user");
