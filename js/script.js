@@ -50,7 +50,9 @@ function renderTable(students) {
 //     .then(data => renderTable(data));
 // }
 
-function loadStudents(page = 1) {    
+function loadStudents(page = 1) {
+    showTableSkeleton();
+
     fetch(API_BASE + `/api-fetch-page.php?page=${page}&limit=${limit}`, {
         method : "GET",
         headers: {
@@ -71,17 +73,35 @@ function loadStudents(page = 1) {
             return;
         }
 
-        currentPage = res.page;
-        totalPages  = res.total_pages;
-
-        renderTable(res.data);
-        renderPagination();
+        setTimeout(() => {
+            currentPage = res.page;
+            totalPages  = res.total_pages;
+            renderTable(res.data);
+            renderPagination();
+        }, 1500);
     })
     .catch(err => {
         console.error(err);
         showToast("Failed to load student", "error");
     });
 }
+
+function showTableSkeleton(rows = 10) {
+    let skeletonHtml = "";
+
+    for (let i = 0; i < rows; i++) {
+        skeletonHtml += `
+            <tr class="skeleton-row">
+                <td colspan="8">
+                    <div class="skeleton-line"></div>
+                </td>
+            </tr>
+        `;
+    }
+
+    document.getElementById("studentsTable").innerHTML = skeletonHtml;
+}
+
 
 function renderPagination() {
 
@@ -394,7 +414,7 @@ function handleAuthError(response) {
                 "Authorization": "Bearer " + token
             }
         })
-        
+
         // clear token
         localStorage.removeItem("auth_token");
         localStorage.removeItem("user");
