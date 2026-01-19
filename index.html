@@ -46,7 +46,7 @@
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content">
                 <form id="studentForm">
-                    <div class="modal-header bg-primary text-white">
+                    <div class="modal-header m_title">
                         <h5 class="modal-title">Add Student</h5>
                         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                     </div>
@@ -89,7 +89,7 @@
     <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-centered">
             <div class="modal-content">
-                <div class="modal-header bg-primary text-white">
+                <div class="modal-header m_title">
                     <h5 class="modal-title">Edit Student</h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                 </div>
@@ -144,7 +144,7 @@
     <div class="modal fade" id="viewModal" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered modal-lg w-50">
             <div class="modal-content shadow">
-                <div class="modal-header bg-primary text-white">
+                <div class="modal-header m_title">
                     <h5 class="modal-title">Student Details</h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                 </div>
@@ -221,8 +221,8 @@
 
             <hr>
             <!-- ================= ADD BUTTON & SEARCH ================= -->
-            <div class="card">
-                <div class="card-body table-responsive">
+            <div>
+                <div class="table-responsive">
                     <div class="d-flex justify-content-between mb-3 mt-2">
                         <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addModal">
                             + Add Student
@@ -230,9 +230,8 @@
                         <input type="text" id="searchInput" class="form-control w-50"
                             placeholder="Search by Name / Email / Course" onkeyup="searchStudents()">
                     </div>
-
                     <!-- ================= STUDENT TABLE ================= -->
-                    <table class="table table-bordered table-striped table-hover text-center">
+                    <table class="table table-bordered table-striped table-hover text-center" id="main-table">
                         <thead class="table-primary">
                             <tr>
                                 <th>S.No</th>

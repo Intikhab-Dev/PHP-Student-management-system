@@ -110,7 +110,7 @@ a {
     color: #22c55e;
 }
 
-table {
+#main-table{
     width: 100%;
     border-collapse: separate;
     border-spacing: 0;
@@ -120,8 +120,13 @@ table {
     box-shadow: 0 8px 25px rgba(0,0,0,0.08);
 }
 
+.m_title{
+    background: linear-gradient(135deg, #4f46e5, #6366f1);
+    color: #ffffff !important;
+}
+
 /* Header */
-table thead tr th {
+#main-table thead tr th {
     background: linear-gradient(135deg, #4f46e5, #6366f1);
     color: #ffffff !important;
     font-weight: 600;
@@ -133,7 +138,7 @@ table thead tr th {
 }
 
 /* Body cells */
-table tbody td {
+#main-table tbody td {
     padding: 14px 12px;
     font-size: 14px;
     color: #374151;
@@ -141,24 +146,24 @@ table tbody td {
 }
 
 /* Zebra rows */
-table tbody tr:nth-child(even) {
+#main-table tbody tr:nth-child(even) {
     background: #f9fafb;
 }
 
 /* Hover effect */
-table tbody tr:hover {
+#main-table tbody tr:hover {
     background: #eef2ff;
     transform: scale(1.005);
     transition: all 0.2s ease;
 }
 
 /* Remove last border */
-table tbody tr:last-child td {
+table  #main-table tbody tr:last-child td {
     border-bottom: none;
 }
 
 /* Action buttons spacing */
-table .btn {
+#main-table .btn {
     margin: 0 3px;
 }
 
