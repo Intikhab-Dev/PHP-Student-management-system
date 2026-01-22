@@ -25,6 +25,7 @@ CREATE TABLE user_tokens (
     `user_id` INT NOT NULL,
     `token` VARCHAR(255) NOT NULL,
     `is_active` TINYINT DEFAULT 1,
+    `expires_at` datetime DEFAULT NULL,
     `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (`user_id`) REFERENCES users(id) ON DELETE CASCADE
 );
