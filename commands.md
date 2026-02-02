@@ -75,28 +75,23 @@ git commit --amend --no-edit --date="2025-01-01 14:30:00" // Change only the dat
 # Migrations
 
 ```bash
-php yii migrate/create test_migration --migrationPath=@app/vendor/uims/health/src/modules/health/migrations                        // HEALTH
-php yii migrate/up --migrationPath=@app/vendor/uims/health/src/modules/health/migrations --migrationTable=health_migration_history // HEALTH
+php yii migrate/create test_migration --migrationPath=@app/vendor/uims/ims/src/modules/ims/migrations                           // IMS
+php yii migrate/up --migrationPath=@app/vendor/uims/ims/src/modules/ims/migrations --migrationTable=ims_migration_history       // IMS
 
-php yii migrate/create test_migration --migrationPath=@app/vendor/uims/estate/src/modules/estate/migrations                        // ESTATE
-php yii migrate/up --migrationPath=@app/vendor/uims/estate/src/modules/estate/migrations --migrationTable=estate_migration_history // ESTATE
+php yii migrate/create test_migration --migrationPath=@app/vendor/uims/sports/src/modules/sports/migrations                           // Sports
+php yii migrate/up --migrationPath=@app/vendor/uims/sports/src/modules/sports/migrations --migrationTable=sports_migration_history    // Sports
 
-php yii migrate/create test_migration --migrationPath=@app/vendor/uims/ehousing/src/modules/ehousing/migrations                    // EHOUSING
-php yii migrate/up --migrationPath=@app/vendor/uims/ehousing/src/modules/ehousing/migrations --migrationTable=ehousing_migration_history                                                                                        // EHOUSING
+php yii migrate/create test_migration --migrationPath=@app/vendor/uims/document/src/modules/document/migrations                    // Document
+php yii migrate/up --migrationPath=@app/vendor/uims/document/src/modules/document/migrations                   --migrationTable=document_migration_history                                                                                        // Document
 ```
 
-# CRUD Generator
+# Yii CRUD Generator
 
 ```bash
-model uims\health\src\modules\health\models\HealthReferralLetterTemplate
-searchModel uims\health\src\modules\health\models\search\HealthReferralLetterTemplateSearch
-controller uims\health\src\modules\health\controllers\HealthReferralLetterTemplateController
-view @app/vendor/uims/health/src/modules/health/views/health-referral-letter-template
-
-model uims\estate\src\modules\estate\models\EstateBuildingStatus
-searchModel uims\estate\src\modules\estate\models\search\EstateBuildingStatusSearch
-controller uims\estate\src\modules\estate\controllers\EstateBuildingStatusController
-view @app/vendor/uims/estate/src/modules/estate/views/estate-maintenance-assignment
+model uims\ims\src\modules\ims\models\model
+searchModel uims\ims\src\modules\ims\models\search\modelSearch
+controller uims\ims\src\modules\ims\controllers\Controller
+view @app/vendor/uims/ims/src/modules/ims/views/view
 ```
 
 # Virtual Box
