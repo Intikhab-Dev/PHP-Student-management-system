@@ -1,5 +1,37 @@
+:root {
+    --bg: #f9fafb;
+    --card: #ffffff;
+    --text: #111827;
+    --border: #e5e7eb;
+    --accent: #4f46e5;
+}
+
+.dark {
+    --bg: #0f172a;
+    --card: #111827;
+    --text: #e5e7eb;
+    --border: #1f2937;
+    --accent: #6366f1;
+}
+
 body {
+    background: var(--bg);
+    color: var(--text);
+    transition: background 0.3s ease, color 0.3s ease;
     padding-bottom: 60px;
+}
+
+.container,
+.card,
+table {
+    background: var(--card);
+    color: var(--text);
+    border-color: var(--border);
+}
+
+table thead th {
+    background: var(--accent);
+    color: #fff;
 }
 
 .custom-navbar {

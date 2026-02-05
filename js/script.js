@@ -370,28 +370,6 @@ function showToast(message, type = "success") {
     toast.show();
 }
 
-const toggleBtn = document.getElementById("darkToggle");
-// Load saved preference
-if (toggleBtn){
-    if (localStorage.getItem("theme") === "dark") {
-        document.body.classList.add("dark-mode");
-        toggleBtn.innerHTML = "☀️ Light Mode";
-    }
-
-    toggleBtn.addEventListener("click", () => {
-        document.body.classList.toggle("dark-mode");
-
-        if (document.body.classList.contains("dark-mode")) {
-            localStorage.setItem("theme", "dark");
-            toggleBtn.innerHTML = "☀️ Light Mode";
-        } else {
-            localStorage.setItem("theme", "light");
-            toggleBtn.innerHTML = "🌙 Dark Mode";
-        }
-    });
-}
-
-
 function closeAddModal() {
     const modalEl = document.getElementById('addModal');
     const modal = bootstrap.Modal.getInstance(modalEl);
@@ -460,6 +438,43 @@ if (user) {
 }
 
 document.getElementById("year").innerText = new Date().getFullYear();
-
 // Initial load
 loadStudents();
+
+// Theme toggle
+const ThemeController = (() => {
+    function applySavedTheme(btn) {
+        const saved = localStorage.getItem("theme");
+
+        if (saved === "dark") {
+            document.documentElement.classList.add("dark");
+            if (btn) btn.innerText = "☀ Light";
+        } else {
+            document.documentElement.classList.remove("dark");
+            if (btn) btn.innerText = "🌙 Dark";
+        }
+    }
+
+    function toggleTheme(btn) {
+        document.documentElement.classList.toggle("dark");
+
+        const isDark = document.documentElement.classList.contains("dark");
+        localStorage.setItem("theme", isDark ? "dark" : "light");
+
+        if (btn) btn.innerText = isDark ? "☀ Light" : "🌙 Dark";
+    }
+
+    function init(buttonId = "themeToggle") {
+        const btn = document.getElementById(buttonId);
+
+        applySavedTheme(btn);
+
+        if (!btn) return;
+
+        btn.addEventListener("click", () => toggleTheme(btn));
+    }
+
+    return { init };
+
+})();
+ThemeController.init();
